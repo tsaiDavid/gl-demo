@@ -1,4 +1,5 @@
 // import lodash from "lodash";
+import stringifyRow from "./stringifyRow";
 
 /**
  * The goal is to take a `golden-layout` config object,
@@ -8,6 +9,7 @@
  *
  * We can use arrays to represent the row/matrix structure.
  */
+
 const transform = config => {
   const rowNamesArray = [];
 
@@ -19,9 +21,7 @@ const transform = config => {
 
     if (el.type === "row" && el.hasOwnProperty("content")) {
       // Iterate through each sub-content child and push their names
-      el.content.forEach(x => {
-        rowNamesArray.push(x.componentName);
-      });
+      rowNamesArray.push(el.content.map(x => x.componentName));
     }
   }
 
@@ -30,7 +30,7 @@ const transform = config => {
     getComponentNames(el);
   });
 
-  return `"${rowNamesArray.join(" ")}"`;
+  return stringifyRow(rowNamesArray);
 };
 
 export default transform;
