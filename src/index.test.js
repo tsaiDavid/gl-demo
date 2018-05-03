@@ -1,4 +1,5 @@
-import transform, { getNamesFromRow } from "./transform";
+import transform, { buildStringFromRow } from "./transform";
+import lodash from "lodash";
 
 const configOne = {
   content: [
@@ -59,9 +60,14 @@ export const configThree = {
   ]
 };
 
-test("Builds string from a content array, for single component", () => {
+test("Util can generate string from content array for one", () => {
   // We are passing in only the content array
-  expect(getNamesFromRow(configOne.content)).toBe('"widget-a"');
+  expect(buildStringFromRow(configOne.content)).toBe('"widget-a"');
+});
+
+test("Util can generate string from content array for two", () => {
+  // We are passing in only the content array
+  expect(buildStringFromRow(configTwo.content)).toBe('"widget-a" "widget-b"');
 });
 
 // +-----------------------+

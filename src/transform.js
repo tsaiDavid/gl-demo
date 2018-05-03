@@ -2,9 +2,10 @@ import lodash from "lodash";
 // Do all your transformation work here
 
 const wrapQuotes = str => {
-  return `"${str}"`;
+  return ` "${str}"`;
 };
-// const configOne = {
+
+// const configTwo = {
 //   content: [
 //     {
 //       type: "row",
@@ -12,21 +13,30 @@ const wrapQuotes = str => {
 //         {
 //           type: "component",
 //           componentName: "widget-a"
+//         },
+//         {
+//           type: "component",
+//           componentName: "widget-b"
 //         }
-//       ]
 //     }
 //   ]
 // };
+
+export const buildStringFromRow = content => {
+  // This is only here to trim off the empty whitespace on the ends of the strings
+  return lodash.trim(getNamesFromRow(content));
+};
+
 // get your componentNames from a content array
-export const getNamesFromRow = content => {
+const getNamesFromRow = content => {
   // Since recursive, we should check for type of content
   if (Array.isArray(content)) {
-    return content.reduce((str, el) => {
+    return content.reduce((str, el, index) => {
       if (el.hasOwnProperty("type") && el.type === "row") {
         return getNamesFromRow(el.content);
       }
 
-      return wrapQuotes(getNamesFromRow(el));
+      return str + wrapQuotes(getNamesFromRow(el));
     }, "");
   }
 
@@ -41,12 +51,12 @@ const transform = config => {
   const rootContentArray = config.content;
 
   const selectedValue = rootContentArray.reduce((finalStr, contentItem) => {
-    return contentItem.content[0].componentName;
+    return buildStringFromRow(contentItem.content);
   }, "");
 
   // const selectedValue = config.content[0].content[0].componentName;
 
-  return wrapQuotes(selectedValue);
+  return selectedValue;
 };
 
 export default transform;
