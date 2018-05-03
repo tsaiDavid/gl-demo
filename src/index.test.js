@@ -32,6 +32,28 @@ const configTwo = {
   ]
 };
 
+const rowWithThree = {
+  content: [
+    {
+      type: "row",
+      content: [
+        {
+          type: "component",
+          componentName: "widget-a"
+        },
+        {
+          type: "component",
+          componentName: "widget-b"
+        },
+        {
+          type: "component",
+          componentName: "widget-c"
+        }
+      ]
+    }
+  ]
+};
+
 export const configThree = {
   content: [
     {
@@ -77,6 +99,10 @@ test("Converts a row with a single component", () => {
 
 test("Converts a row with two components", () => {
   expect(transform(configTwo)).toBe(`"widget-a widget-b"`);
+});
+
+test("Converts a row with three components", () => {
+  expect(transform(rowWithThree)).toBe(`"widget-a widget-b widget-c"`);
 });
 
 // +------------------------+
