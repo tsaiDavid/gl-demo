@@ -1,4 +1,4 @@
-import transform from "./transform";
+import transform, { getNamesFromRow } from "./transform";
 
 const configOne = {
   content: [
@@ -58,6 +58,11 @@ export const configThree = {
     }
   ]
 };
+
+test("Builds string from a content array, for single component", () => {
+  // We are passing in only the content array
+  expect(getNamesFromRow(configOne.content)).toBe('"widget-a"');
+});
 
 // +-----------------------+
 // |                       |
