@@ -1,13 +1,13 @@
 import GoldenLayout from "golden-layout";
 
-const config = {
+export const config = {
   content: [
     {
       type: "row",
       content: [
         {
           type: "component",
-          componentName: "testComponent",
+          componentName: "widget",
           componentState: { label: "A" }
         },
         {
@@ -15,12 +15,12 @@ const config = {
           content: [
             {
               type: "component",
-              componentName: "testComponent",
+              componentName: "widget",
               componentState: { label: "B" }
             },
             {
               type: "component",
-              componentName: "testComponent",
+              componentName: "widget",
               componentState: { label: "C" }
             }
           ]
@@ -32,7 +32,7 @@ const config = {
 
 const myLayout = new GoldenLayout(config);
 
-myLayout.registerComponent("testComponent", (container, componentState) => {
+myLayout.registerComponent("widget", (container, componentState) => {
   container.getElement().html("<h2>" + componentState.label + "</h2>");
 });
 
