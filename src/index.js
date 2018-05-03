@@ -1,8 +1,39 @@
-document.getElementById("app").innerHTML = `
-<h1>Hello Parcel!</h1>
-<div>
-  Look
-  <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>
-  for more info about Parcel.
-</div>
-`;
+import GoldenLayout from "golden-layout";
+
+const config = {
+  content: [
+    {
+      type: "row",
+      content: [
+        {
+          type: "component",
+          componentName: "testComponent",
+          componentState: { label: "A" }
+        },
+        {
+          type: "column",
+          content: [
+            {
+              type: "component",
+              componentName: "testComponent",
+              componentState: { label: "B" }
+            },
+            {
+              type: "component",
+              componentName: "testComponent",
+              componentState: { label: "C" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+const myLayout = new GoldenLayout(config);
+
+myLayout.registerComponent("testComponent", (container, componentState) => {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+
+myLayout.init();
