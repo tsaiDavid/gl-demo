@@ -14,7 +14,25 @@ const configOne = {
   ]
 };
 
-export const configTwo = {
+const configTwo = {
+  content: [
+    {
+      type: "row",
+      content: [
+        {
+          type: "component",
+          componentName: "widget-a"
+        },
+        {
+          type: "component",
+          componentName: "widget-b"
+        }
+      ]
+    }
+  ]
+};
+
+export const configThree = {
   content: [
     {
       type: "row",
@@ -57,6 +75,10 @@ test("Converts a row with a single component", () => {
   expect(transform(configOne)).toBe(`"widget-a"`);
 });
 
+test("Converts a row with two components", () => {
+  expect(transform(configTwo)).toBe(`"widget-a widget-b"`);
+});
+
 // +------------------------+
 // |           +------------|
 // |           |           ||
@@ -71,5 +93,7 @@ test("Converts a row with a single component", () => {
 // +------------------------+
 
 test("Converts a row with a column w/ children", () => {
-  expect(transform(configTwo)).toBe(`"widget-a widget-b" "widget-a widget-c"`);
+  expect(transform(configThree)).toBe(
+    `"widget-a widget-b" "widget-a widget-c"`
+  );
 });
