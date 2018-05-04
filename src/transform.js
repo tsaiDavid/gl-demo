@@ -56,7 +56,6 @@ const transform = config => {
   // NOTE: Can this be pulled into the recursive fn?
   config.content.forEach(el => {
     getComponentNames(el);
-    console.log(maxWidthOfRootRow);
   });
 
   return stringifyMultiRows(rowNamesArray);
