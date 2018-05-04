@@ -1,5 +1,5 @@
 // import lodash from "lodash";
-import stringifyRow from "./stringifyRow";
+import { stringifyMultiRows } from "./stringifyRow";
 
 /**
  * The goal is to take a `golden-layout` config object,
@@ -30,7 +30,7 @@ const transform = config => {
     getComponentNames(el);
   });
 
-  return stringifyRow(rowNamesArray);
+  return stringifyMultiRows(rowNamesArray);
 };
 
 export default transform;

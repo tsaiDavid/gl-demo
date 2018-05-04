@@ -1,15 +1,37 @@
+import lodash from "lodash";
 /**
  * rowArray: []string
- * returns space-delimited string template of names
+ * returns a JS string, space delimited (not string template)
  *
  * example: ["a", "b", "c"]
- * output: '"a b c"'
+ * output: "a b c"
  */
-const stringifyRow = rowArray => {
-  return `"${rowArray
-    .join(" ")
-    .split(",")
-    .join(" ")}"`;
+export const stringifyNamesArray = namesArray => {
+  return namesArray.join(" ");
+  // return `"${rowArray
+  //   .join(" ")
+  //   .split(",")
+  //   .join(" ")}"`;
 };
 
-export default stringifyRow;
+// Expected value to be (using ===):
+// "\"a a a\" \"b b b\" \"b c c\""
+// Received:
+// ["a a a", "b b b", "b c c"]
+
+/**
+ * rowArray: []string | []Array<string>
+ * returns space-delimited string template of names
+ *
+ * example: [["a", "b"], ["a", "b"]]
+ * output: '"a b" "a b"'
+ */
+export const stringifyMultiRows = rowArray => {
+  const preparedArray = rowArray.map(row => stringifyNamesArray(row));
+
+  return lodash.trim(
+    preparedArray.reduce((str, el, idx) => {
+      return `${str} "${el}"`;
+    }, "")
+  );
+};
