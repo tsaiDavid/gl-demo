@@ -10,8 +10,35 @@ import { stringifyMultiRows } from "./stringifyRow";
  * We can use arrays to represent the row/matrix structure.
  */
 
+// content: [
+//   {
+//     type: "row",
+//     content: [
+//       {
+//         type: "component",
+//         componentName: "widget-a"
+//       },
+//       {
+//         type: "column",
+//         content: [
+//           {
+//             type: "component",
+//             componentName: "widget-b"
+//           },
+//           {
+//             type: "component",
+//             componentName: "widget-c"
+//           }
+//         ]
+//       }
+//     ]
+//   }
+// ]
+// };
+
 const transform = config => {
   const rowNamesArray = [];
+  let maxWidthOfRootRow = null;
 
   // TODO: Refactor recursive function
   function getComponentNames(el) {
@@ -20,6 +47,7 @@ const transform = config => {
     }
 
     if (el.type === "row" && el.hasOwnProperty("content")) {
+      maxWidthOfRootRow = el.content.length;
       // Iterate through each sub-content child and push their names
       rowNamesArray.push(el.content.map(x => x.componentName));
     }
@@ -28,6 +56,7 @@ const transform = config => {
   // NOTE: Can this be pulled into the recursive fn?
   config.content.forEach(el => {
     getComponentNames(el);
+    console.log(maxWidthOfRootRow);
   });
 
   return stringifyMultiRows(rowNamesArray);
